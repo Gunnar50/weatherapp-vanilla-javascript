@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+		<script type="module" src="index.js"></script>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div id="weather-info" class="weather-container hidden">
+			<div class="weather-header">Weather in <span id="location"></span></div>
+			<img id="icon" alt="Weather Icon" />
+			<div class="weather-item">
+				Temperature: <span id="temperature"></span>&deg;C
+			</div>
+			<div class="weather-item">
+				Description: <span id="description"></span>
+			</div>
+			<div class="weather-item">Humidity: <span id="humidity"></span>%</div>
+			<div class="weather-item">
+				Wind Speed: <span id="windSpeed"></span> m/s
+			</div>
+		</div>
+		<div id="error-message" class="hidden"></div>
+	</body>
+</html>
