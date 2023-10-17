@@ -53,3 +53,30 @@ export const updateCurrentTime = () => {
 	const now = new Date();
 	return formatTime(now.toLocaleString());
 };
+
+export const getWindDirection = (degrees) => {
+	let direction = "";
+
+	// Determine the cardinal direction
+	if (degrees >= 330 || degrees <= 30) {
+		direction = "N";
+	} else if (degrees > 30 && degrees <= 60) {
+		direction = "NE";
+	} else if (degrees > 60 && degrees <= 120) {
+		direction = "E";
+	} else if (degrees > 120 && degrees <= 150) {
+		direction = "SE";
+	} else if (degrees > 150 && degrees <= 210) {
+		direction = "S";
+	} else if (degrees > 210 && degrees <= 240) {
+		direction = "SW";
+	} else if (degrees > 240 && degrees <= 300) {
+		direction = "W";
+	} else if (degrees > 300 && degrees < 330) {
+		direction = "NW";
+	} else {
+		direction = "UNK";
+	}
+
+	return direction;
+};
