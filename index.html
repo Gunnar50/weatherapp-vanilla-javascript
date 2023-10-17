@@ -3,26 +3,20 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>Open WeatherApp</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
-		<script type="module" src="index.js"></script>
+		<script type="module" src="./js/index.js"></script>
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
-		<div id="weather-info" class="weather-container hidden">
-			<div class="weather-header">Weather in <span id="location"></span></div>
-			<img id="icon" alt="Weather Icon" />
-			<div class="weather-item">
-				Temperature: <span id="temperature"></span>&deg;C
+		<div id="root" class="container">
+			<div class="title">
+				<h2>WeatherApp</h2>
 			</div>
-			<div class="weather-item">
-				Description: <span id="description"></span>
-			</div>
-			<div class="weather-item">Humidity: <span id="humidity"></span>%</div>
-			<div class="weather-item">
-				Wind Speed: <span id="windSpeed"></span> m/s
+			<div class="search-bar">
+				<input id="city-input" type="text" placeholder="Enter city name" />
+				<button class="search">Search</button>
 			</div>
 		</div>
-		<div id="error-message" class="hidden"></div>
 	</body>
 </html>
