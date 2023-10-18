@@ -2,12 +2,12 @@ export const API = "085590031a30567d9813303060a2063c";
 export const weatherURL = "https://api.openweathermap.org/data/2.5/forecast?";
 export const [autoLat, autoLong] = [51.50722, -0.1275];
 
-export const formatTime = (timeString) => {
+export const formatTime = (time) => {
 	let date;
-	if (typeof timeString === "string") {
-		date = new Date(timeString);
+	if (typeof time === "string") {
+		date = new Date(time);
 	} else {
-		date = new Date(timeString * 1000);
+		date = new Date(time * 1000);
 	}
 	let hours = date.getHours();
 	const minutes = date.getMinutes();
@@ -55,7 +55,8 @@ export const getFormattedDate = (dateString) => {
 
 export const updateCurrentTime = () => {
 	const now = new Date();
-	return formatTime(now.toLocaleString());
+	console.log(Date.now());
+	return formatTime(Date.now() / 1000);
 };
 
 export const getWindDirection = (degrees) => {

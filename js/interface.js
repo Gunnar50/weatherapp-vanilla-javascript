@@ -30,7 +30,7 @@ export const setInterface = ({ city, list }) => {
 		<div class="location">
 			<h3 class="city">${cityName}, ${country}</h3>
 			<div class="today-date">
-				<span class="current-date">${getFormattedDate(currentWeather.dt_txt)}</span>
+				<span class="current-date">${getFormattedDate(Date.now())}</span>
 				<span id="current-time" class="current-time"></span>
 			</div>
 		</div>
@@ -58,7 +58,7 @@ export const setInterface = ({ city, list }) => {
 				.map((data) => {
 					return `
 						<div class="hour-card">
-							<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}.png" />
+							<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png" />
 							<span class="hour-temp"> ${Math.floor(data.main.temp)}&deg; </span>
 							<span class="hour-time">${formatTime(data.dt_txt)}</span>
 						</div>
@@ -77,7 +77,7 @@ export const setInterface = ({ city, list }) => {
 							<div class="weekday-description">${data.weather[0].description}</div>
 						</div>
 						<div class="day-card-icon">
-							<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}.png" />
+							<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png" />
 						</div>
 						<div class="day-temp">
 							${Math.floor(data.main.temp)}&deg;
