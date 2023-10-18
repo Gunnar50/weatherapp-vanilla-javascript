@@ -1,3 +1,7 @@
-import { getWeather } from "./controller.js";
+import { findUser } from "./findUserController.js";
+import { getUserLocation } from "./inputController.js";
+import { getAutoGeoLocation } from "./weatherController.js";
 
-getWeather();
+getAutoGeoLocation();
+findUser();
+getUserLocation();
