@@ -23,7 +23,7 @@ export const setInterface = ({ city, list }) => {
 		daySection.dt_txt.endsWith("12:00:00")
 	);
 
-	// console.log(todayWeather);
+	console.log(todayWeather);
 	console.log(city);
 
 	const todayContainer = `
