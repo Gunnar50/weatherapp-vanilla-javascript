@@ -91,13 +91,13 @@ body {
 	}
 	.today-date {
 		color: var(--primary);
-		font-size: 0.9rem;
-		font-weight: 500;
+		font-size: 0.8rem;
+		font-weight: 600;
 
 		.current-date {
 			border-right: 2px solid var(--primary);
-			padding-right: 1rem;
-			margin-right: 1rem;
+			padding-right: 0.5rem;
+			margin-right: 0.5rem;
 		}
 	}
 }

@@ -12,6 +12,7 @@ export function getUserLocation() {
 			(error) => {
 				reject(error);
 				console.log("Unable to fetch location: " + error.message);
+				// handle the error when user denies access
 			}
 		);
 	});

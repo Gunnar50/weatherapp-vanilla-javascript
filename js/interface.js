@@ -1,3 +1,4 @@
+import { getUserLocation } from "./inputController.js";
 import {
 	formatTime,
 	getFormattedDate,
@@ -22,11 +23,10 @@ export const setInterface = ({ city, list }) => {
 		daySection.dt_txt.endsWith("12:00:00")
 	);
 
-	console.log(todayWeather);
-	console.log(list);
+	// console.log(todayWeather);
+	// console.log(list);
 
 	const todayContainer = `
-	<div class="today-container">
 		<div class="location">
 			<h3 class="city">${cityName}, ${country}</h3>
 			<div class="today-date">
@@ -66,8 +66,6 @@ export const setInterface = ({ city, list }) => {
 				})
 				.join("")}
 		</div>
-		
-	</div>
 	`;
 
 	const createDayCard = (array) => {
@@ -93,14 +91,13 @@ export const setInterface = ({ city, list }) => {
 		return html.join("");
 	};
 
-	const weekContainer = `
-	<div class="week-container">
-		${createDayCard(nextDays)}
-		
-	</div>
-	`;
+	const weekContainer = createDayCard(nextDays);
 
-	root.innerHTML += todayContainer + weekContainer;
+	const todayContainerRef = document.querySelector("[data-today]");
+	const weekContainerRef = document.querySelector("[data-week]");
+	todayContainerRef.innerHTML = todayContainer;
+	weekContainerRef.innerHTML = weekContainer;
+
 	const currentTime = document.getElementById("current-time");
 	currentTime.innerHTML = updateCurrentTime();
 	setInterval(() => (currentTime.innerHTML = updateCurrentTime()), 30000);

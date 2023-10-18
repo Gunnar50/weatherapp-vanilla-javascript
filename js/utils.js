@@ -1,3 +1,7 @@
+export const API = "085590031a30567d9813303060a2063c";
+export const weatherURL = "https://api.openweathermap.org/data/2.5/forecast?";
+export const [autoLat, autoLong] = [51.50722, -0.1275];
+
 export const formatTime = (timeString) => {
 	let date;
 	if (typeof timeString === "string") {
