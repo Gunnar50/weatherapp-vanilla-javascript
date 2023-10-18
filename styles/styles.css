@@ -23,6 +23,11 @@
   box-sizing: border-box;
 }
 
+ul[role=list],
+ol[role=list] {
+  list-style: none;
+}
+
 img {
   display: block;
   width: 100%;
@@ -44,18 +49,23 @@ body {
 }
 
 .search-bar {
-  display: flex;
-  position: relative;
   margin: 0 auto;
   width: 90%;
+  position: relative;
+  z-index: 2;
 }
-.search-bar input {
+.search-bar .input-bar {
+  position: relative;
+  display: flex;
+  z-index: 3;
+}
+.search-bar .input-bar input {
   width: 100%;
   border-radius: 7px;
   border: 2px solid var(--primary);
   padding: 5px;
 }
-.search-bar button {
+.search-bar .input-bar button {
   cursor: pointer;
   position: absolute;
   right: 0;
@@ -65,9 +75,29 @@ body {
   border-radius: 7px;
   transition: all 100ms ease;
 }
-.search-bar button:hover {
+.search-bar .input-bar button:hover {
   background-color: rgba(1, 12, 36, 0.5176470588);
   color: var(--white);
+}
+.search-bar .suggestion-container {
+  position: relative;
+}
+.search-bar .suggestion-container ul {
+  display: none;
+  position: absolute;
+  margin: 0;
+  padding: 1rem 0;
+  top: -10px;
+  width: 100%;
+  background-color: var(--white);
+}
+.search-bar .suggestion-container ul li {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.3rem 0.5rem;
+}
+.search-bar .suggestion-container ul li:hover {
+  background-color: #a8a8a8;
 }
 
 .today-container {
