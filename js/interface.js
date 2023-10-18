@@ -24,7 +24,7 @@ export const setInterface = ({ city, list }) => {
 	);
 
 	// console.log(todayWeather);
-	// console.log(list);
+	console.log(city);
 
 	const todayContainer = `
 		<div class="location">
