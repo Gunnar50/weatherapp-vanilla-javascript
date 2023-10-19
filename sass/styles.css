@@ -39,6 +39,10 @@ body {
   );
 }
 
+[data-theme=day][data-weather=clear] {
+  background-color: lightblue;
+}
+
 .container {
   margin: 1rem auto;
   max-width: 320px;
@@ -188,10 +192,14 @@ body {
   padding: 0.5rem;
   box-shadow: 5px 5px 11px 4px rgba(0, 0, 0, 0.25);
 }
+.hour-container .hour-card .hour-feels,
+.hour-container .hour-card .hour-humidity {
+  display: none;
+}
 .hour-container .hour-card .hour-temp {
   font-size: 1.7rem;
 }
-.hour-container .hour-card .hour-time {
+.hour-container .hour-card .h-text {
   font-size: 0.8rem;
 }
 
@@ -232,4 +240,89 @@ body {
   width: 50px;
   font-size: 1.5rem;
   font-weight: 500;
+}
+
+@media screen and (min-width: 650px) {
+  .container {
+    max-width: 60rem;
+    margin: auto;
+    padding: 1rem;
+  }
+  .today-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 3fr;
+  }
+  .today-container .search-bar {
+    width: 100%;
+  }
+  .current-information .today-temp {
+    margin-top: 0;
+  }
+  .search-bar .suggestion-container ul {
+    color: var(--primary);
+  }
+  .hour-container .hour-card {
+    justify-content: space-between;
+    padding-block: 1.5rem;
+  }
+  .hour-container .hour-card .hour-feels,
+  .hour-container .hour-card .hour-humidity {
+    display: block;
+  }
+  .hour-container .hour-card .hour-temp {
+    font-size: 2.5rem;
+  }
+  .hour-container .hour-card .h-text {
+    font-size: 1rem;
+  }
+  .week-container {
+    flex-direction: row;
+  }
+  .week-container .day-card {
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .week-container .day-card .day {
+    margin-right: 0;
+    text-align: center;
+  }
+  .week-container .day-card .day .weekday {
+    font-size: 2rem;
+  }
+  .week-container .day-card .day-card-icon {
+    width: 100px;
+    border-bottom: 2px solid var(--white);
+  }
+  .week-container .day-card .day-temp {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (min-width: 800px) {
+  .location h3 {
+    font-size: 1.5rem;
+  }
+  .location .today-date {
+    font-size: 0.9rem;
+  }
+  .today-container {
+    display: grid;
+    grid-template-columns: 1fr 0.1fr 2fr;
+    grid-template-rows: 1fr 3fr;
+  }
+  .today-container > :nth-child(2) {
+    grid-column: 3/4;
+  }
+  .today-container > :nth-child(4) {
+    grid-column: 3/4;
+  }
+  .hour-container {
+    gap: 1rem;
+  }
+  .hour-container .hour-card {
+    padding: 1rem;
+    flex: 1;
+  }
 }/*# sourceMappingURL=styles.css.map */
