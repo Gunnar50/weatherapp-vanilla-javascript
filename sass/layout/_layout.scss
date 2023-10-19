@@ -1,5 +1,11 @@
 @use "../abstracts" as *;
 
+[data-theme="day"] {
+	&[data-weather="clear"] {
+		background-color: lightblue;
+	}
+}
+
 .container {
 	margin: 1rem auto;
 	max-width: 320px;
