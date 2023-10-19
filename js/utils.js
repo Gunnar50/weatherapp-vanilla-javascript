@@ -1,10 +1,9 @@
-export const API = "085590031a30567d9813303060a2063c";
-export const weatherURL = "https://api.openweathermap.org/data/2.5/forecast?";
-export const [autoLat, autoLong] = [51.50722, -0.1275]; // London coords
-const mediumScreen = 650;
-const searchBarRef = document.querySelector("[data-search-bar]");
-const todayContainerRef = document.querySelector("[data-today]");
-const rootContainerRef = document.getElementById("root");
+import {
+	mediumScreen,
+	rootContainerRef,
+	searchBarRef,
+	todayContainerRef,
+} from "./config.js";
 
 export const formatTime = (time) => {
 	let date;

@@ -1,12 +1,12 @@
+import { API_KEY, API_URL, autoLat, autoLong } from "./config.js";
 import { setInterface } from "./interface.js";
 import { getUserLocation } from "./location.js";
-import { API, autoLat, autoLong, weatherURL } from "./utils.js";
 
 export const getWeather = async (latitude, longitude) => {
 	try {
 		const units = "metric";
 		const { data } = await axios.get(
-			`${weatherURL}lat=${latitude}&lon=${longitude}&units=${units}&appid=${API}`
+			`${API_URL}/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=${units}&appid=${API_KEY}`
 		);
 		setInterface(data);
 	} catch (error) {

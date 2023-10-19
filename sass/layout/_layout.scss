@@ -1,8 +1,27 @@
 @use "../abstracts" as *;
 
-[data-theme="day"] {
+[data-theme="day"],
+[data-theme="night"] {
 	&[data-weather="clear"] {
-		background-color: lightblue;
+		background: linear-gradient(180deg, #a5cdf1, #e2f2fc);
+	}
+	&[data-weather="rain"] {
+		background: linear-gradient(180deg, #a4a4a4, #d4e4f7);
+	}
+	&[data-weather="clouds"] {
+		background: linear-gradient(180deg, #d4d4d4, #eaeaea);
+	}
+	&[data-weather="thunderstorm"] {
+		background: linear-gradient(180deg, #656565, #a9a9a9);
+	}
+	&[data-weather="drizzle"] {
+		background: linear-gradient(180deg, #b0c4de, #d3d3d3);
+	}
+	&[data-weather="atmosphere"] {
+		background: linear-gradient(180deg, #dab892, #f5e1a4);
+	}
+	&[data-weather="snow"] {
+		background: linear-gradient(180deg, #c6e2ff, #e0ffff);
 	}
 }
 

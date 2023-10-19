@@ -1,4 +1,3 @@
-import { getUserLocation } from "./inputController.js";
 import {
 	checkScreenSize,
 	formatTime,
@@ -6,6 +5,8 @@ import {
 	getWindDirection,
 	updateCurrentTime,
 } from "./utils.js";
+
+import { todayContainerRef, weekContainerRef } from "./config.js";
 
 export const setInterface = ({ city, list }) => {
 	const { name: cityName, country, sunrise, sunset } = city;
@@ -16,6 +17,7 @@ export const setInterface = ({ city, list }) => {
 
 	// gets current hour weather
 	const currentWeather = todayWeather[0];
+	const currentWeatherType = todayWeather[0].weather[0].main.toLowerCase();
 
 	// filters only the objects that is at 12pm or midday.
 	const nextDays = list.filter((daySection) =>
@@ -56,7 +58,7 @@ export const setInterface = ({ city, list }) => {
 			${todayWeather
 				.map((data) => {
 					return `
-						<div class="hour-card">
+						<div class="hour-card ${data.weather[0].main.toLowerCase()}">
 							<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png" />
 							<span class="hour-temp"> ${Math.round(data.main.temp)}&deg; </span>
 							<span class="h-text hour-time">${formatTime(data.dt_txt)}</span>
@@ -72,7 +74,7 @@ export const setInterface = ({ city, list }) => {
 	const createDayCard = (array) => {
 		const html = array.map((data) => {
 			return `
-					<div class="day-card">
+					<div class="day-card ${data.weather[0].main.toLowerCase()}">
 						<div class="day">
 							<div class="weekday">${getFormattedDate(data.dt_txt).split(",")[0]}</div>
 							<div class="weekday-description">${data.weather[0].description}</div>
@@ -94,8 +96,6 @@ export const setInterface = ({ city, list }) => {
 
 	const weekContainer = createDayCard(nextDays);
 
-	const todayContainerRef = document.querySelector("[data-today]");
-	const weekContainerRef = document.querySelector("[data-week]");
 	todayContainerRef.innerHTML = todayContainer;
 	weekContainerRef.innerHTML = weekContainer;
 
@@ -103,6 +103,15 @@ export const setInterface = ({ city, list }) => {
 	currentTime.innerHTML = updateCurrentTime();
 	setInterval(() => (currentTime.innerHTML = updateCurrentTime()), 30000);
 
+	if (Date.now() > sunset * 1000 || Date.now() < sunrise * 1000) {
+		document.documentElement.setAttribute("data-theme", "night");
+	} else {
+		document.documentElement.setAttribute("data-theme", "day");
+	}
+
+	document.documentElement.setAttribute("data-weather", currentWeatherType);
+
+	// the input box change place in the dom depending on the size of the window
 	checkScreenSize();
 	window.addEventListener("resize", checkScreenSize);
 };

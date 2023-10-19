@@ -19,6 +19,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Open Sans", sans-serif;
+  height: 100vh;
 }
 
 :root {
@@ -39,8 +40,33 @@ body {
   );
 }
 
-[data-theme=day][data-weather=clear] {
-  background-color: lightblue;
+[data-theme=day][data-weather=clear],
+[data-theme=night][data-weather=clear] {
+  background: linear-gradient(180deg, #a5cdf1, #e2f2fc);
+}
+[data-theme=day][data-weather=rain],
+[data-theme=night][data-weather=rain] {
+  background: linear-gradient(180deg, #a4a4a4, #d4e4f7);
+}
+[data-theme=day][data-weather=clouds],
+[data-theme=night][data-weather=clouds] {
+  background: linear-gradient(180deg, #d4d4d4, #eaeaea);
+}
+[data-theme=day][data-weather=thunderstorm],
+[data-theme=night][data-weather=thunderstorm] {
+  background: linear-gradient(180deg, #656565, #a9a9a9);
+}
+[data-theme=day][data-weather=drizzle],
+[data-theme=night][data-weather=drizzle] {
+  background: linear-gradient(180deg, #b0c4de, #d3d3d3);
+}
+[data-theme=day][data-weather=atmosphere],
+[data-theme=night][data-weather=atmosphere] {
+  background: linear-gradient(180deg, #dab892, #f5e1a4);
+}
+[data-theme=day][data-weather=snow],
+[data-theme=night][data-weather=snow] {
+  background: linear-gradient(180deg, #c6e2ff, #e0ffff);
 }
 
 .container {
