@@ -1,0 +1,109 @@
+@use "../abstracts" as *;
+
+.today-container {
+	--_text-color: var(--text-color, var(--white));
+
+	background: var(--primary-gradient);
+	color: var(--_text-color);
+	border-radius: 20px;
+	border: 3px solid var(--primary);
+	padding: 1rem;
+	margin-top: 1rem;
+}
+
+.location {
+	padding: 0 1rem;
+	h3 {
+		margin: 0.5rem 0;
+		text-shadow: var(--text-shadow);
+	}
+	.today-date {
+		color: var(--primary);
+		font-size: 0.8rem;
+		font-weight: 600;
+
+		.current-date {
+			border-right: 2px solid var(--primary);
+			padding-right: 0.5rem;
+			margin-right: 0.5rem;
+		}
+	}
+}
+
+.current-information {
+	text-align: center;
+	padding: 0 1rem;
+	// outline: 1px solid red;
+
+	.today-temp {
+		color: var(--primary);
+		display: flex;
+		flex-direction: column;
+		margin: 1rem 0;
+		.weather-temp {
+			font-size: 6rem;
+			font-weight: 700;
+			line-height: 1;
+			position: relative;
+			&::after {
+				content: "°";
+				position: absolute;
+				font-size: 3rem;
+				top: 0.5rem;
+			}
+		}
+		.weather-description {
+			font-size: 1.5rem;
+			font-weight: 700;
+		}
+	}
+	.more-info {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		border-top: 2px solid var(--white);
+		margin-bottom: 1rem;
+		font-size: 0.9rem;
+		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+		& > * {
+			margin-top: 1rem;
+		}
+		.feels,
+		.sunrise {
+			text-align: left;
+		}
+
+		.wind,
+		.sunset {
+			text-align: right;
+		}
+	}
+}
+
+.hour-container {
+	display: flex;
+	color: var(--primary);
+	justify-content: space-between;
+
+	.hour-card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: var(--neutral-light);
+		border-radius: 13px;
+		padding: 0.5rem;
+		box-shadow: 5px 5px 11px 4px rgba(0, 0, 0, 0.25);
+
+		.hour-temp {
+			font-size: 1.7rem;
+		}
+		.hour-time {
+			font-size: 0.8rem;
+		}
+	}
+}
+
+.sunny {
+	background: linear-gradient(rgba(52, 154, 226, 0.3), rgba(203, 237, 255, 0.5)),
+		url("../images/sunny-v.png");
+	background-size: cover;
+}

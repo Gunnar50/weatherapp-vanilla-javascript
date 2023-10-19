@@ -1,0 +1,20 @@
+:root {
+	--main-bg2: #646f7f;
+	--primary: #010c24;
+
+	--neutral-light: #a8e0ff;
+	--white: #fff;
+
+	--text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+
+	--primary-gradient: linear-gradient(
+		180deg,
+		rgb(119, 149, 193) 0%,
+		rgba(170, 174, 181, 0.2) 200%
+	);
+	--secondary-gradient: linear-gradient(
+		90deg,
+		rgb(119, 149, 193) 0%,
+		rgba(170, 174, 181, 0.2) 150%
+	);
+}

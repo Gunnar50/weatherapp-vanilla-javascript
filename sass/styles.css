@@ -1,22 +1,4 @@
 @charset "UTF-8";
-:root {
-  --main-bg2: #646f7f;
-  --primary: #010c24;
-  --neutral-light: #a8e0ff;
-  --white: #fff;
-  --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-  --primary-gradient: linear-gradient(
-  	180deg,
-  	rgb(119, 149, 193) 0%,
-  	rgba(170, 174, 181, 0.2) 200%
-  );
-  --secondary-gradient: linear-gradient(
-  	90deg,
-  	rgb(119, 149, 193) 0%,
-  	rgba(170, 174, 181, 0.2) 150%
-  );
-}
-
 *,
 *::before,
 *::after {
@@ -37,6 +19,24 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Open Sans", sans-serif;
+}
+
+:root {
+  --main-bg2: #646f7f;
+  --primary: #010c24;
+  --neutral-light: #a8e0ff;
+  --white: #fff;
+  --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  --primary-gradient: linear-gradient(
+  	180deg,
+  	rgb(119, 149, 193) 0%,
+  	rgba(170, 174, 181, 0.2) 200%
+  );
+  --secondary-gradient: linear-gradient(
+  	90deg,
+  	rgb(119, 149, 193) 0%,
+  	rgba(170, 174, 181, 0.2) 150%
+  );
 }
 
 .container {
@@ -160,6 +160,7 @@ body {
   border-top: 2px solid var(--white);
   margin-bottom: 1rem;
   font-size: 0.9rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 .current-information .more-info > * {
   margin-top: 1rem;
@@ -192,6 +193,11 @@ body {
 }
 .hour-container .hour-card .hour-time {
   font-size: 0.8rem;
+}
+
+.sunny {
+  background: linear-gradient(rgba(52, 154, 226, 0.3), rgba(203, 237, 255, 0.5)), url("../images/sunny-v.png");
+  background-size: cover;
 }
 
 .week-container {
