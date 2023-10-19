@@ -1,12 +1,11 @@
 import { getUserLocation } from "./inputController.js";
 import {
+	checkScreenSize,
 	formatTime,
 	getFormattedDate,
 	getWindDirection,
 	updateCurrentTime,
 } from "./utils.js";
-
-const root = document.getElementById("root");
 
 export const setInterface = ({ city, list }) => {
 	const { name: cityName, country, sunrise, sunset } = city;
@@ -24,7 +23,7 @@ export const setInterface = ({ city, list }) => {
 	);
 
 	console.log(todayWeather);
-	console.log(city);
+	// console.log(city);
 
 	const todayContainer = `
 		<div class="location">
@@ -37,13 +36,13 @@ export const setInterface = ({ city, list }) => {
 		<div class="current-information">
 			
 			<div class="today-temp">
-				<span class="weather-temp">${Math.floor(currentWeather.main.temp)}</span>
+				<span class="weather-temp">${Math.round(currentWeather.main.temp)}</span>
 				<span class="weather-description">${
 					currentWeather.weather[0].description
 				}</span>
 			</div>
 			<div class="more-info">
-				<span class="feels">feels like: ${Math.floor(
+				<span class="feels">feels like: ${Math.round(
 					currentWeather.main.feels_like
 				)}&deg;</span>
 				<span class="wind">wind: ${getWindDirection(currentWeather.wind.deg)} ${
@@ -59,8 +58,10 @@ export const setInterface = ({ city, list }) => {
 					return `
 						<div class="hour-card">
 							<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png" />
-							<span class="hour-temp"> ${Math.floor(data.main.temp)}&deg; </span>
-							<span class="hour-time">${formatTime(data.dt_txt)}</span>
+							<span class="hour-temp"> ${Math.round(data.main.temp)}&deg; </span>
+							<span class="h-text hour-time">${formatTime(data.dt_txt)}</span>
+							<span class="h-text hour-feels">W ${data.wind.speed}m/s</span>
+							<span class="h-hour hour-humidity">H ${data.main.humidity}%</span>
 						</div>
 					`;
 				})
@@ -80,7 +81,7 @@ export const setInterface = ({ city, list }) => {
 							<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png" />
 						</div>
 						<div class="day-temp">
-							${Math.floor(data.main.temp)}&deg;
+							${Math.round(data.main.temp)}&deg;
 						</div>
 					</div>
 				`;
@@ -101,4 +102,7 @@ export const setInterface = ({ city, list }) => {
 	const currentTime = document.getElementById("current-time");
 	currentTime.innerHTML = updateCurrentTime();
 	setInterval(() => (currentTime.innerHTML = updateCurrentTime()), 30000);
+
+	checkScreenSize();
+	window.addEventListener("resize", checkScreenSize);
 };

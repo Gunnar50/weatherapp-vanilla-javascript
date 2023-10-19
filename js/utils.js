@@ -1,6 +1,10 @@
 export const API = "085590031a30567d9813303060a2063c";
 export const weatherURL = "https://api.openweathermap.org/data/2.5/forecast?";
-export const [autoLat, autoLong] = [51.50722, -0.1275];
+export const [autoLat, autoLong] = [51.50722, -0.1275]; // London coords
+const mediumScreen = 650;
+const searchBarRef = document.querySelector("[data-search-bar]");
+const todayContainerRef = document.querySelector("[data-today]");
+const rootContainerRef = document.getElementById("root");
 
 export const formatTime = (time) => {
 	let date;
@@ -54,8 +58,6 @@ export const getFormattedDate = (dateString) => {
 };
 
 export const updateCurrentTime = () => {
-	const now = new Date();
-	console.log(Date.now());
 	return formatTime(Date.now() / 1000);
 };
 
@@ -84,4 +86,15 @@ export const getWindDirection = (degrees) => {
 	}
 
 	return direction;
+};
+
+export const checkScreenSize = () => {
+	if (window.innerWidth >= mediumScreen) {
+		todayContainerRef.insertBefore(
+			searchBarRef,
+			todayContainerRef.firstChild.nextSibling.nextSibling
+		);
+	} else {
+		rootContainerRef.insertBefore(searchBarRef, todayContainerRef);
+	}
 };
