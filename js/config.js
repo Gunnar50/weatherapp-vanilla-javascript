@@ -3,7 +3,7 @@ export const API_URL = "https://api.openweathermap.org";
 
 export const [autoLat, autoLong] = [51.50722, -0.1275]; // London coords
 
-export const mediumScreen = 650;
+export const mediumScreen = 760;
 export const searchBarRef = document.querySelector("[data-search-bar]");
 
 export const rootContainerRef = document.getElementById("root");
