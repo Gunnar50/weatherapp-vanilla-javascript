@@ -5,10 +5,13 @@ import { getUserLocation } from "./location.js";
 export const getWeather = async (latitude, longitude) => {
 	try {
 		const units = "metric";
-		const { data } = await axios.get(
+		const weekForeast = await axios.get(
 			`${API_URL}/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=${units}&appid=${API_KEY}`
 		);
-		setInterface(data);
+		const currentDay = await axios.get(
+			`${API_URL}/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${API_KEY}`
+		);
+		setInterface(weekForeast.data, currentDay.data);
 	} catch (error) {
 		console.log("Ops! Something went wrong: " + error.message);
 	}
