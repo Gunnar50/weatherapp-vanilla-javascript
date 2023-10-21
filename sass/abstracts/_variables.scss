@@ -5,7 +5,7 @@
 	--neutral-light: #a8e0ff;
 	--white: #fff;
 
-	--text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+	--text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 
 	--primary-gradient: linear-gradient(
 		180deg,
@@ -17,7 +17,53 @@
 		rgb(119, 149, 193) 0%,
 		rgba(170, 174, 181, 0.2) 150%
 	);
+
+	// animations colours
+	--white-cloud: #d7d7d7;
+	--darker-cloud: #49484a;
+	--shadow-cloud: #808080;
+	--rain-drop: blue;
+	--sun: #ffe400;
+
+	--animation-time: 7s;
+	--animation-translate: -5px;
+
+	--icon-size: 0.35;
+	--scale-amount: 0.01;
+	--scale-factor: 0;
 }
 
-$medium: 650px;
-$large: 800px;
+$medium: 760px;
+$large: 845px;
+
+[data-theme="day"],
+[data-theme="night"] {
+	&[data-weather="clear"] {
+		background: linear-gradient(180deg, #a5cdf1, #e2f2fc);
+	}
+	&[data-weather="rain"] {
+		background: linear-gradient(180deg, #a4a4a4, #d4e4f7);
+	}
+	&[data-weather="clouds"] {
+		background: linear-gradient(180deg, #d4d4d4, #eaeaea);
+	}
+	&[data-weather="thunderstorm"] {
+		background: linear-gradient(180deg, #656565, #a9a9a9);
+	}
+	&[data-weather="drizzle"] {
+		background: linear-gradient(180deg, #b0c4de, #d3d3d3);
+	}
+	&[data-weather="atmosphere"] {
+		background: linear-gradient(180deg, #dab892, #f5e1a4);
+	}
+	&[data-weather="snow"] {
+		background: linear-gradient(180deg, #c6e2ff, #e0ffff);
+	}
+}
+[data-theme="night"] {
+	.search-bar .input-bar button {
+		color: var(--primary);
+		background-color: var(--white);
+		border: 2px solid var(--primary);
+	}
+}
