@@ -1,14 +1,76 @@
 @use "../abstracts" as *;
 
 .today-container {
-	--_text-color: var(--text-color, var(--white));
+	--_text-color: var(--text-color, var(--card-color));
+	--_shadow-color: var(--shadow-color, var(--text-shadow));
 
-	background: var(--primary-gradient);
+	background: var(--card-bg);
 	color: var(--_text-color);
 	border-radius: 20px;
-	border: 3px solid var(--primary);
+	box-shadow: 5px 5px 14px 6px rgba(0, 0, 0, 0.5),
+		inset 0 0 20px 5px rgba(0, 0, 0, 0.3);
 	padding: 1rem;
 	margin-top: 1rem;
+
+	.card {
+		.few-clouds-night {
+			--left: -11px;
+			--top: -47px;
+			--scale-factor: -0.1;
+			--scale-amount: 0.005;
+		}
+		.few-clouds-day {
+			--left: -26px;
+			--top: 8px;
+		}
+		.clouds {
+			--left: -26px;
+			--top: 8px;
+		}
+		.more-clouds {
+			--left: -29px;
+			--top: 8px;
+		}
+		.clear-day {
+			--left: -26px;
+			--top: -17px;
+		}
+		.clear-night {
+			--left: 12px;
+			--top: 44px;
+		}
+		.snow {
+			--left: -26px;
+			--top: 0px;
+		}
+		.rain {
+			--left: -29px;
+			--top: 5px;
+		}
+		.light-rain-day {
+			--left: -26px;
+			--top: 8px;
+		}
+		.light-rain-night {
+			--left: -26px;
+			--top: 4px;
+		}
+		.drizzle {
+			--left: -26px;
+			--top: 4px;
+		}
+		.storm {
+			--left: -29px;
+			--top: 2px;
+		}
+	}
+}
+
+.card-day .location .today-date {
+	--text-color: var(--primary);
+}
+.card-night .location .today-date {
+	--text-color: var(--card-color);
 }
 
 .location {
@@ -17,26 +79,43 @@
 		margin: 0.5rem 0;
 		text-shadow: var(--text-shadow);
 	}
+
 	.today-date {
-		color: var(--primary);
+		color: var(--_text-color);
 		font-size: 0.8rem;
 		font-weight: 600;
 
 		.current-date {
-			border-right: 2px solid var(--primary);
+			border-right: 2px solid var(--_text-color);
 			padding-right: 0.5rem;
 			margin-right: 0.5rem;
 		}
 	}
 }
 
+.card-day {
+	.location .city {
+		color: var(--white);
+	}
+	.current-information .more-info {
+		color: var(--white);
+	}
+}
+
 .current-information {
 	text-align: center;
 	padding: 0 1rem;
-	// outline: 1px solid red;
+
+	.card-day .today-temp {
+		--text-color: var(--primary);
+	}
+
+	.card-night .today-temp {
+		--text-color: var(--card-color);
+	}
 
 	.today-temp {
-		color: var(--primary);
+		color: var(--_text-color);
 		display: flex;
 		flex-direction: column;
 		margin: 1rem 0;
@@ -59,6 +138,7 @@
 	}
 	.more-info {
 		display: grid;
+		color: var(--_text-color);
 		grid-template-columns: 1fr 1fr;
 		border-top: 2px solid var(--white);
 		margin-bottom: 1rem;
@@ -88,10 +168,13 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-color: var(--neutral-light);
+		background-color: var(--card-bg);
+		color: var(--card-color);
 		border-radius: 13px;
 		padding: 0.5rem;
-		box-shadow: 5px 5px 11px 4px rgba(0, 0, 0, 0.25);
+		box-shadow: 5px 5px 11px 4px rgba(0, 0, 0, 0.25),
+			inset 0 0 20px 5px rgba(0, 0, 0, 0.25);
+		transition: transform 500ms ease;
 		.hour-feels,
 		.hour-humidity {
 			display: none;
@@ -102,11 +185,14 @@
 		.h-text {
 			font-size: 0.8rem;
 		}
-	}
-}
+		.hour-desc {
+			display: none;
+			text-align: center;
+		}
 
-.sunny {
-	background: linear-gradient(rgba(52, 154, 226, 0.3), rgba(203, 237, 255, 0.5)),
-		url("../images/sunny-v.png");
-	background-size: cover;
+		&:hover {
+			transition: transform 100ms ease;
+			transform: scale(1.01) translateY(-5px);
+		}
+	}
 }

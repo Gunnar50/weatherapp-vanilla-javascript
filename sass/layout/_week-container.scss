@@ -1,6 +1,8 @@
 @use "../abstracts" as *;
 
 .week-container {
+	--_text-color: var(--text-color, var(--card-color));
+
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -9,9 +11,17 @@
 		display: flex;
 		justify-content: end;
 		align-items: center;
-		background: var(--secondary-gradient);
+		background: var(--card-bg);
+		color: var(--card-color);
+		box-shadow: 5px 5px 14px 6px rgba(0, 0, 0, 0.5),
+			inset 0 0 20px 5px rgba(0, 0, 0, 0.3);
 		padding: 1rem;
 		border-radius: 12px;
+
+		&.card-day .day .weekday-description {
+			text-shadow: none;
+		}
+
 		.day {
 			margin-right: auto;
 			.weekday {
@@ -20,9 +30,10 @@
 				font-weight: 500;
 			}
 			.weekday-description {
-				color: var(--primary);
-				font-size: 1.1rem;
-				font-weight: 600;
+				color: var(--_text-color);
+				text-shadow: var(--text-shadow);
+				font-size: 1rem;
+				font-weight: 400;
 			}
 		}
 		.day-temp {
@@ -30,6 +41,67 @@
 			width: 50px;
 			font-size: 1.5rem;
 			font-weight: 500;
+		}
+	}
+
+	.card {
+		.few-clouds-day {
+			--left: -43px;
+			--top: 6px;
+		}
+		.few-clouds-night {
+			--left: -25px;
+			--top: -47px;
+			--scale-factor: -0.1;
+			--scale-amount: 0.005;
+		}
+		.clouds {
+			--left: -43px;
+			--top: 6px;
+		}
+		.more-clouds {
+			--left: -43px;
+			--top: 4px;
+		}
+		.clear-day {
+			--left: -38px;
+			--top: -20px;
+		}
+		.clear-night {
+			--left: 2px;
+			--top: 42px;
+		}
+		.snow {
+			--left: -43px;
+			--top: 2px;
+		}
+		.rain {
+			--left: -43px;
+			--top: 4px;
+		}
+		.light-rain-day {
+			--left: -43px;
+			--top: 6px;
+		}
+		.light-rain-night {
+			--left: -43px;
+			--top: 2px;
+		}
+		.drizzle {
+			--left: -43px;
+			--top: 2px;
+		}
+		.storm {
+			--left: -43px;
+			--top: 2px;
+		}
+	}
+	.day-card-more-info {
+		text-align: center;
+		display: none;
+		p {
+			margin: 0;
+			margin-bottom: 0.5rem;
 		}
 	}
 }
