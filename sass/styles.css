@@ -19,7 +19,6 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Open Sans", sans-serif;
-  height: 100vh;
 }
 
 :root {
@@ -27,7 +26,7 @@ body {
   --primary: #010c24;
   --neutral-light: #a8e0ff;
   --white: #fff;
-  --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   --primary-gradient: linear-gradient(
   	180deg,
   	rgb(119, 149, 193) 0%,
@@ -38,6 +37,16 @@ body {
   	rgb(119, 149, 193) 0%,
   	rgba(170, 174, 181, 0.2) 150%
   );
+  --white-cloud: #d7d7d7;
+  --darker-cloud: #49484a;
+  --shadow-cloud: #808080;
+  --rain-drop: blue;
+  --sun: #ffe400;
+  --animation-time: 7s;
+  --animation-translate: -5px;
+  --icon-size: 0.35;
+  --scale-amount: 0.01;
+  --scale-factor: 0;
 }
 
 [data-theme=day][data-weather=clear],
@@ -67,6 +76,12 @@ body {
 [data-theme=day][data-weather=snow],
 [data-theme=night][data-weather=snow] {
   background: linear-gradient(180deg, #c6e2ff, #e0ffff);
+}
+
+[data-theme=night] .search-bar .input-bar button {
+  color: var(--primary);
+  background-color: var(--white);
+  border: 2px solid var(--primary);
 }
 
 .container {
@@ -131,13 +146,72 @@ body {
 }
 
 .today-container {
-  --_text-color: var(--text-color, var(--white));
-  background: var(--primary-gradient);
+  --_text-color: var(--text-color, var(--card-color));
+  --_shadow-color: var(--shadow-color, var(--text-shadow));
+  background: var(--card-bg);
   color: var(--_text-color);
   border-radius: 20px;
-  border: 3px solid var(--primary);
+  box-shadow: 5px 5px 14px 6px rgba(0, 0, 0, 0.5), inset 0 0 20px 5px rgba(0, 0, 0, 0.3);
   padding: 1rem;
   margin-top: 1rem;
+}
+.today-container .card .few-clouds-night {
+  --left: -11px;
+  --top: -47px;
+  --scale-factor: -0.1;
+  --scale-amount: 0.005;
+}
+.today-container .card .few-clouds-day {
+  --left: -26px;
+  --top: 8px;
+}
+.today-container .card .clouds {
+  --left: -26px;
+  --top: 8px;
+}
+.today-container .card .more-clouds {
+  --left: -29px;
+  --top: 8px;
+}
+.today-container .card .clear-day {
+  --left: -26px;
+  --top: -17px;
+}
+.today-container .card .clear-night {
+  --left: 12px;
+  --top: 44px;
+}
+.today-container .card .snow {
+  --left: -26px;
+  --top: 0px;
+}
+.today-container .card .rain {
+  --left: -29px;
+  --top: 5px;
+}
+.today-container .card .light-rain-day {
+  --left: -26px;
+  --top: 8px;
+}
+.today-container .card .light-rain-night {
+  --left: -26px;
+  --top: 4px;
+}
+.today-container .card .drizzle {
+  --left: -26px;
+  --top: 4px;
+}
+.today-container .card .storm {
+  --left: -29px;
+  --top: 2px;
+}
+
+.card-day .location .today-date {
+  --text-color: var(--primary);
+}
+
+.card-night .location .today-date {
+  --text-color: var(--card-color);
 }
 
 .location {
@@ -148,22 +222,35 @@ body {
   text-shadow: var(--text-shadow);
 }
 .location .today-date {
-  color: var(--primary);
+  color: var(--_text-color);
   font-size: 0.8rem;
   font-weight: 600;
 }
 .location .today-date .current-date {
-  border-right: 2px solid var(--primary);
+  border-right: 2px solid var(--_text-color);
   padding-right: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.card-day .location .city {
+  color: var(--white);
+}
+.card-day .current-information .more-info {
+  color: var(--white);
 }
 
 .current-information {
   text-align: center;
   padding: 0 1rem;
 }
+.current-information .card-day .today-temp {
+  --text-color: var(--primary);
+}
+.current-information .card-night .today-temp {
+  --text-color: var(--card-color);
+}
 .current-information .today-temp {
-  color: var(--primary);
+  color: var(--_text-color);
   display: flex;
   flex-direction: column;
   margin: 1rem 0;
@@ -186,6 +273,7 @@ body {
 }
 .current-information .more-info {
   display: grid;
+  color: var(--_text-color);
   grid-template-columns: 1fr 1fr;
   border-top: 2px solid var(--white);
   margin-bottom: 1rem;
@@ -213,10 +301,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--neutral-light);
+  background-color: var(--card-bg);
+  color: var(--card-color);
   border-radius: 13px;
   padding: 0.5rem;
-  box-shadow: 5px 5px 11px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 5px 5px 11px 4px rgba(0, 0, 0, 0.25), inset 0 0 20px 5px rgba(0, 0, 0, 0.25);
+  transition: transform 500ms ease;
 }
 .hour-container .hour-card .hour-feels,
 .hour-container .hour-card .hour-humidity {
@@ -228,13 +318,17 @@ body {
 .hour-container .hour-card .h-text {
   font-size: 0.8rem;
 }
-
-.sunny {
-  background: linear-gradient(rgba(52, 154, 226, 0.3), rgba(203, 237, 255, 0.5)), url("../images/sunny-v.png");
-  background-size: cover;
+.hour-container .hour-card .hour-desc {
+  display: none;
+  text-align: center;
+}
+.hour-container .hour-card:hover {
+  transition: transform 100ms ease;
+  transform: scale(1.01) translateY(-5px);
 }
 
 .week-container {
+  --_text-color: var(--text-color, var(--card-color));
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -244,9 +338,14 @@ body {
   display: flex;
   justify-content: end;
   align-items: center;
-  background: var(--secondary-gradient);
+  background: var(--card-bg);
+  color: var(--card-color);
+  box-shadow: 5px 5px 14px 6px rgba(0, 0, 0, 0.5), inset 0 0 20px 5px rgba(0, 0, 0, 0.3);
   padding: 1rem;
   border-radius: 12px;
+}
+.week-container .day-card.card-day .day .weekday-description {
+  text-shadow: none;
 }
 .week-container .day-card .day {
   margin-right: auto;
@@ -257,9 +356,10 @@ body {
   font-weight: 500;
 }
 .week-container .day-card .day .weekday-description {
-  color: var(--primary);
-  font-size: 1.1rem;
-  font-weight: 600;
+  color: var(--_text-color);
+  text-shadow: var(--text-shadow);
+  font-size: 1rem;
+  font-weight: 400;
 }
 .week-container .day-card .day-temp {
   text-align: right;
@@ -267,8 +367,623 @@ body {
   font-size: 1.5rem;
   font-weight: 500;
 }
+.week-container .card .few-clouds-day {
+  --left: -43px;
+  --top: 6px;
+}
+.week-container .card .few-clouds-night {
+  --left: -25px;
+  --top: -47px;
+  --scale-factor: -0.1;
+  --scale-amount: 0.005;
+}
+.week-container .card .clouds {
+  --left: -43px;
+  --top: 6px;
+}
+.week-container .card .more-clouds {
+  --left: -43px;
+  --top: 4px;
+}
+.week-container .card .clear-day {
+  --left: -38px;
+  --top: -20px;
+}
+.week-container .card .clear-night {
+  --left: 2px;
+  --top: 42px;
+}
+.week-container .card .snow {
+  --left: -43px;
+  --top: 2px;
+}
+.week-container .card .rain {
+  --left: -43px;
+  --top: 4px;
+}
+.week-container .card .light-rain-day {
+  --left: -43px;
+  --top: 6px;
+}
+.week-container .card .light-rain-night {
+  --left: -43px;
+  --top: 2px;
+}
+.week-container .card .drizzle {
+  --left: -43px;
+  --top: 2px;
+}
+.week-container .card .storm {
+  --left: -43px;
+  --top: 2px;
+}
+.week-container .day-card-more-info {
+  text-align: center;
+  display: none;
+}
+.week-container .day-card-more-info p {
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
 
-@media screen and (min-width: 650px) {
+.card {
+  position: relative;
+  padding: 1.5em 1em;
+  display: block;
+}
+
+.hour-container .hour-card.card-day.card-rain, .hour-container .hour-card.card-day.card-light-rain,
+.week-container .day-card.card-day.card-rain,
+.week-container .day-card.card-day.card-light-rain,
+.today-container.card-day.card-rain,
+.today-container.card-day.card-light-rain {
+  --shadow-cloud: hsl(212, 7%, 52%);
+  --card-bg: hsl(214, 11%, 70%);
+}
+.hour-container .hour-card.card-day.card-snow,
+.week-container .day-card.card-day.card-snow,
+.today-container.card-day.card-snow {
+  --card-bg: hsl(218, 45%, 87%);
+  --white-cloud: var(--white);
+  --shadow-cloud: hsl(210, 6%, 79%);
+}
+.hour-container .hour-card.card-day.card-storm,
+.week-container .day-card.card-day.card-storm,
+.today-container.card-day.card-storm {
+  --card-color: var(--white);
+  --card-bg: hsl(216, 7%, 29%);
+  --shadow-cloud: hsl(216, 5%, 19%);
+  --white-cloud: #b7b7b7;
+  --rain-drop: hsl(221, 100%, 69%);
+  --darker-cloud: #666468;
+}
+.hour-container .hour-card.card-day.card-clear,
+.week-container .day-card.card-day.card-clear,
+.today-container.card-day.card-clear {
+  --card-bg: #4fc1e9;
+}
+.hour-container .hour-card.card-day.card-clouds,
+.week-container .day-card.card-day.card-clouds,
+.today-container.card-day.card-clouds {
+  --shadow-cloud: hsl(213, 23%, 65%);
+  --card-bg: hsl(194, 24%, 76%);
+}
+.hour-container .hour-card.card-day.card-more-clouds,
+.week-container .day-card.card-day.card-more-clouds,
+.today-container.card-day.card-more-clouds {
+  --shadow-cloud: hsl(212, 7%, 52%);
+  --card-bg: hsl(215, 13%, 82%);
+}
+.hour-container .hour-card.card-night,
+.week-container .day-card.card-night,
+.today-container.card-night {
+  --card-color: var(--white);
+  --card-bg: #212f4d;
+}
+.hour-container .hour-card.card-night.card-rain, .hour-container .hour-card.card-night.card-light-rain,
+.week-container .day-card.card-night.card-rain,
+.week-container .day-card.card-night.card-light-rain,
+.today-container.card-night.card-rain,
+.today-container.card-night.card-light-rain {
+  --shadow-cloud: hsl(214, 9%, 31%);
+  --rain-drop: hsl(196, 49%, 76%);
+}
+.hour-container .hour-card.card-night.card-snow,
+.week-container .day-card.card-night.card-snow,
+.today-container.card-night.card-snow {
+  --white-cloud: var(--white);
+  --shadow-cloud: hsl(212, 10%, 34%);
+}
+.hour-container .hour-card.card-night.card-storm,
+.week-container .day-card.card-night.card-storm,
+.today-container.card-night.card-storm {
+  --card-color: var(--white);
+  --shadow-cloud: hsl(214, 9%, 31%);
+  --rain-drop: hsl(221, 100%, 77%);
+}
+.hour-container .hour-card.card-night.card-clouds, .hour-container .hour-card.card-night.card-more-clouds,
+.week-container .day-card.card-night.card-clouds,
+.week-container .day-card.card-night.card-more-clouds,
+.today-container.card-night.card-clouds,
+.today-container.card-night.card-more-clouds {
+  --shadow-cloud: hsl(212, 9%, 31%);
+}
+
+.today-container.card-night {
+  --card-bg: #2f3a4f;
+}
+
+.clear-night {
+  animation: night-stars var(--animation-time) ease-in-out infinite;
+  background-color: var(--white) fff;
+  border-radius: 50%;
+  box-shadow: var(--white) 26px 7px 0 -1px, rgba(255, 255, 255, 0.1) -36px -19px 0 -1px, rgba(255, 255, 255, 0.1) -51px -34px 0 -1px, var(--white) -52px -62px 0 -1px, var(--white) 14px -37px, rgba(255, 255, 255, 0.1) 41px -19px, var(--white) 34px -50px, rgba(255, 255, 255, 0.1) 14px -71px 0 -1px, var(--white) 64px -21px 0 -1px, rgba(255, 255, 255, 0.1) 32px -85px 0 -1px, var(--white) 64px -90px, rgba(255, 255, 255, 0.1) 60px -67px 0 -1px, var(--white) 34px -127px, rgba(255, 255, 255, 0.1) -26px -103px 0 -1px;
+  height: 4px;
+  width: 4px;
+  opacity: 1;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+.clear-night:before {
+  animation: night-moon 9s ease-in-out infinite;
+  border-radius: 50%;
+  box-shadow: var(--white) -35px 0;
+  content: "";
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: -106px;
+  transform: rotate(-5deg);
+}
+.clear-night:after {
+  animation: night-moon 9s ease-in-out infinite;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) -5px 0 0;
+  content: "";
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: -106px;
+  transform: rotate(-5deg);
+}
+
+@keyframes night-moon {
+  50% {
+    transform: rotate(10deg);
+  }
+}
+@keyframes night-stars {
+  50% {
+    box-shadow: rgba(255, 255, 255, 0.1) 26px 7px 0 -1px, var(--white) -36px -19px 0 -1px, var(--white) -51px -34px 0 -1px, rgba(255, 255, 255, 0.1) -52px -62px 0 -1px, rgba(255, 255, 255, 0.1) 14px -37px, var(--white) 41px -19px, rgba(255, 255, 255, 0.1) 34px -50px, var(--white) 14px -71px 0 -1px, rgba(255, 255, 255, 0.1) 64px -21px 0 -1px, var(--white) 32px -85px 0 -1px, rgba(255, 255, 255, 0.1) 64px -90px, var(--white) 60px -67px 0 -1px, rgba(255, 255, 255, 0.1) 34px -127px, var(--white) -26px -103px 0 -1px;
+  }
+}
+.rain {
+  animation: bounce var(--animation-time) ease-in-out infinite;
+  background: var(--white-cloud);
+  border-radius: 50%;
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px, var(--darker-cloud) 104px -38px 0 -5px, var(--darker-cloud) 73px -52px 0 1px, var(--darker-cloud) 100px -20px 0 -1px, var(--darker-cloud) 122px -21px 0 -8px, var(--darker-cloud) 126px -21px 0 -8px, var(--shadow-cloud) 118px -18px 5px -4px;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+.rain:before {
+  animation: rain-drop 0.7s infinite linear;
+  content: "";
+  background: transparent;
+  margin-left: 0;
+  border-radius: 50%;
+  display: block;
+  height: 6px;
+  width: 3px;
+  opacity: 0.3;
+  transform: scale(0.9);
+}
+
+.light-rain-day {
+  animation: bounce var(--animation-time) ease-in-out infinite;
+  background: var(--white-cloud);
+  border-radius: 50%;
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px, var(--sun) 88px -30px 0 10px, rgba(255, 255, 0, 0.4) 88px -30px 10px 15px;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+.light-rain-day:before {
+  animation: rain-drop 0.7s infinite linear;
+  content: "";
+  background: transparent;
+  margin-left: 0;
+  border-radius: 50%;
+  display: block;
+  height: 6px;
+  width: 3px;
+  opacity: 0.3;
+  transform: scale(0.9);
+}
+
+.light-rain-night {
+  animation: bounce var(--animation-time) ease-in-out infinite;
+  background: var(--white-cloud);
+  border-radius: 50%;
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+.light-rain-night:before {
+  animation: rain-drop 0.7s infinite linear;
+  content: "";
+  background: transparent;
+  margin-left: 0;
+  border-radius: 50%;
+  display: block;
+  height: 6px;
+  width: 3px;
+  opacity: 0.3;
+  transform: scale(0.9);
+}
+
+@keyframes rain-drop {
+  0% {
+    box-shadow: transparent 30px 30px, transparent 40px 40px, var(--rain-drop) 50px 75px, var(--rain-drop) 55px 50px, var(--rain-drop) 70px 100px, var(--rain-drop) 80px 95px, var(--rain-drop) 110px 45px, var(--rain-drop) 90px 35px;
+  }
+  25% {
+    box-shadow: var(--rain-drop) 30px 45px, var(--rain-drop) 40px 60px, var(--rain-drop) 50px 90px, var(--rain-drop) 55px 65px, transparent 70px 120px, transparent 80px 120px, var(--rain-drop) 110px 70px, var(--rain-drop) 90px 60px;
+  }
+  26% {
+    box-shadow: var(--rain-drop) 30px 45px, var(--rain-drop) 40px 60px, var(--rain-drop) 50px 90px, var(--rain-drop) 55px 65px, transparent 70px 40px, transparent 80px 20px, var(--rain-drop) 110px 70px, var(--rain-drop) 90px 60px;
+  }
+  50% {
+    box-shadow: var(--rain-drop) 30px 70px, var(--rain-drop) 40px 80px, transparent 50px 100px, var(--rain-drop) 55px 80px, var(--rain-drop) 70px 60px, var(--rain-drop) 80px 45px, var(--rain-drop) 110px 95px, var(--rain-drop) 90px 85px;
+  }
+  51% {
+    box-shadow: var(--rain-drop) 30px 70px, var(--rain-drop) 40px 80px, transparent 50px 45px, var(--rain-drop) 55px 80px, var(--rain-drop) 70px 60px, var(--rain-drop) 80px 45px, var(--rain-drop) 110px 95px, var(--rain-drop) 90px 85px;
+  }
+  75% {
+    box-shadow: var(--rain-drop) 30px 95px, var(--rain-drop) 40px 100px, var(--rain-drop) 50px 60px, transparent 55px 95px, var(--rain-drop) 70px 80px, var(--rain-drop) 80px 70px, transparent 110px 120px, transparent 90px 110px;
+  }
+  76% {
+    box-shadow: var(--rain-drop) 30px 95px, var(--rain-drop) 40px 100px, var(--rain-drop) 50px 60px, transparent 55px 35px, var(--rain-drop) 70px 80px, var(--rain-drop) 80px 70px, transparent 110px 25px, transparent 90px 15px;
+  }
+  100% {
+    box-shadow: transparent 30px 120px, transparent 40px 120px, var(--rain-drop) 50px 75px, var(--rain-drop) 55px 50px, var(--rain-drop) 70px 100px, var(--rain-drop) 80px 95px, var(--rain-drop) 110px 45px, var(--rain-drop) 90px 35px;
+  }
+}
+.snow {
+  animation: bounce 5s ease-in-out infinite;
+  background: var(--white);
+  border-radius: 50%;
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+.snow:before {
+  animation: snow-flakes 2s infinite linear;
+  content: "";
+  border-radius: 50%;
+  display: block;
+  height: 7px;
+  width: 7px;
+  opacity: 0.8;
+  transform: scale(0.9);
+}
+
+@keyframes snow-flakes {
+  0% {
+    box-shadow: rgba(238, 238, 238, 0) 30px 30px, rgba(238, 238, 238, 0) 40px 40px, #eee 50px 75px, #eee 55px 50px, #eee 70px 100px, #eee 80px 95px, #eee 110px 45px, #eee 90px 35px;
+  }
+  25% {
+    box-shadow: #eee 30px 45px, #eee 40px 60px, #eee 50px 90px, #eee 55px 65px, rgba(238, 238, 238, 0) 70px 120px, rgba(238, 238, 238, 0) 80px 120px, #eee 110px 70px, #eee 90px 60px;
+  }
+  26% {
+    box-shadow: #eee 30px 45px, #eee 40px 60px, #eee 50px 90px, #eee 55px 65px, rgba(238, 238, 238, 0) 70px 40px, rgba(238, 238, 238, 0) 80px 20px, #eee 110px 70px, #eee 90px 60px;
+  }
+  50% {
+    box-shadow: #eee 30px 70px, #eee 40px 80px, rgba(238, 238, 238, 0) 50px 100px, #eee 55px 80px, #eee 70px 60px, #eee 80px 45px, #eee 110px 95px, #eee 90px 85px;
+  }
+  51% {
+    box-shadow: #eee 30px 70px, #eee 40px 80px, rgba(238, 238, 238, 0) 50px 45px, #eee 55px 80px, #eee 70px 60px, #eee 80px 45px, #eee 110px 95px, #eee 90px 85px;
+  }
+  75% {
+    box-shadow: #eee 30px 95px, #eee 40px 100px, #eee 50px 60px, rgba(238, 238, 238, 0) 55px 95px, #eee 70px 80px, #eee 80px 70px, rgba(238, 238, 238, 0) 110px 120px, rgba(238, 238, 238, 0) 90px 110px;
+  }
+  76% {
+    box-shadow: #eee 30px 95px, #eee 40px 100px, #eee 50px 60px, rgba(238, 238, 238, 0) 55px 35px, #eee 70px 80px, #eee 80px 70px, rgba(238, 238, 238, 0) 110px 25px, rgba(238, 238, 238, 0) 90px 15px;
+  }
+  100% {
+    box-shadow: rgba(238, 238, 238, 0) 30px 120px, rgba(238, 238, 238, 0) 40px 120px, #eee 50px 75px, #eee 55px 50px, #eee 70px 100px, #eee 80px 95px, #eee 110px 45px, #eee 90px 35px;
+  }
+}
+.storm {
+  animation: bounce var(--animation-time) ease-in-out infinite, cloud-lightning 3s steps(1, end) infinite;
+  background: var(--white-cloud);
+  border-radius: 50%;
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px, var(--darker-cloud) 104px -38px 0 -5px, var(--darker-cloud) 73px -52px 0 1px, var(--darker-cloud) 100px -20px 0 -1px, var(--darker-cloud) 122px -21px 0 -8px, var(--darker-cloud) 126px -21px 0 -8px, var(--shadow-cloud) 118px -18px 5px -4px;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+.storm:before {
+  animation: storm-lightning 3s steps(1, end) infinite;
+  border-right: 7px solid transparent;
+  border-top: 33px solid yellow;
+  box-shadow: yellow -2px -30px, rgba(255, 255, 0, 0.4) -2px -30px 10px;
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+  position: absolute;
+  left: 57px;
+  top: 70px;
+  transform: rotate(14deg) scale(0.7);
+}
+.storm:after {
+  animation: rain-drop 0.7s infinite linear;
+  content: "";
+  background: transparent;
+  margin-left: 0;
+  border-radius: 50%;
+  display: block;
+  height: 6px;
+  width: 3px;
+  opacity: 0.3;
+  transform: scale(0.9);
+}
+
+@keyframes cloud-lightning {
+  0% {
+    --white-cloud: var(--white);
+  }
+  5% {
+    --white-cloud: #d7d7d7;
+  }
+  10% {
+    --white-cloud: var(--white);
+  }
+  15% {
+    --white-cloud: #d7d7d7;
+  }
+}
+@keyframes storm-lightning {
+  0% {
+    transform: rotate(20deg);
+    opacity: 1;
+  }
+  5% {
+    transform: rotate(-34deg);
+    opacity: 1;
+  }
+  10% {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  15% {
+    transform: rotate(-34deg);
+    opacity: 0;
+  }
+}
+.clear-day {
+  animation: sun var(--animation-time) linear infinite;
+  background: #ffe400;
+  border-radius: 100%;
+  box-shadow: rgba(255, 255, 0, 0.1) 0 0 5px 5px;
+  content: "";
+  height: 90px;
+  width: 90px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+.clear-day:before {
+  animation: sun-glow 9s ease-in-out infinite;
+  background: #ffee44;
+  box-shadow: yellow 0 0 5px 1px;
+  border-radius: 100%;
+  content: "";
+  height: 86px;
+  width: 86px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+}
+
+@keyframes sun {
+  50% {
+    transform: translateY(var(--animation-translate)) scale(calc(var(--icon-size) + var(--scale-amount) + var(--scale-factor)));
+    box-shadow: rgba(255, 255, 0, 0.2) 0 0 5px 10px;
+  }
+}
+@keyframes sun-glow {
+  50% {
+    box-shadow: rgba(255, 255, 0, 0.1) 0 0 5px 10px;
+  }
+}
+.few-clouds-day {
+  animation: few-clouds-day var(--animation-time) ease-in-out infinite;
+  background: var(--white-cloud);
+  border-radius: 50%;
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--sun) 88px -30px 0 10px, rgba(255, 255, 0, 0.4) 88px -30px 10px 15px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+
+@keyframes few-clouds-day {
+  50% {
+    transform: translateY(var(--animation-translate)) scale(calc(var(--icon-size) + var(--scale-amount) + var(--scale-factor)));
+    box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--sun) 86px -20px 0 10px, rgba(255, 255, 0, 0.4) 86px -20px 10px 15px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px;
+  }
+}
+.few-clouds-night {
+  animation: night-moon-2 var(--animation-time) ease-in-out infinite;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) -5px 0 0, var(--white) -35px 0;
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  opacity: 1;
+  left: var(--left);
+  top: var(--top);
+  transform: rotate(-50deg) scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+.few-clouds-night:after {
+  animation: night-star-2 var(--animation-time) ease-in-out infinite;
+  background-color: var(--white);
+  border-radius: 50%;
+  content: "";
+  box-shadow: var(--white) 26px 7px 0 -1px, rgba(255, 255, 255, 0.1) -36px -19px 0 -1px, rgba(255, 255, 255, 0.1) -51px -34px 0 -1px, var(--white) -24px -121px 0 -1px, var(--white) 14px -37px, rgba(255, 255, 255, 0.1) 41px -19px, var(--white) 34px -50px, rgba(255, 255, 255, 0.1) 14px -71px 0 -1px, var(--white) 64px -21px 0 -1px, rgba(255, 255, 255, 0.1) 32px -85px 0 -1px, var(--white) 64px -90px, rgba(255, 255, 255, 0.1) 60px -67px 0 -1px, var(--white) 34px -127px, rgba(255, 255, 255, 0.1) -26px -103px 0 -1px;
+  height: 4px;
+  width: 4px;
+  position: absolute;
+  top: 104px;
+  left: -27px;
+}
+.few-clouds-night:before {
+  animation: night-moon-cloud var(--animation-time) ease-in-out infinite;
+  background: var(--white-cloud);
+  border-radius: 50%;
+  content: "";
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: -165px;
+  top: -31px;
+  transform: rotate(50deg) scale(1.5);
+}
+
+@keyframes night-moon-2 {
+  50% {
+    transform: rotate(-50deg) scale(calc(var(--icon-size) + var(--scale-amount) + var(--scale-factor))) translate(-5px, 5px);
+  }
+}
+@keyframes night-moon-cloud {
+  50% {
+    transform: rotate(50deg) scale(1.52);
+  }
+}
+@keyframes night-stars-2 {
+  50% {
+    box-shadow: rgba(255, 255, 255, 0.1) 26px 7px 0 -1px, var(--white) -36px -19px 0 -1px, var(--white) -51px -34px 0 -1px, rgba(255, 255, 255, 0.1) -52px -62px 0 -1px, rgba(255, 255, 255, 0.1) 14px -37px, var(--white) 41px -19px, rgba(255, 255, 255, 0.1) 34px -50px, var(--white) 14px -71px 0 -1px, rgba(255, 255, 255, 0.1) 64px -21px 0 -1px, var(--white) 32px -85px 0 -1px, rgba(255, 255, 255, 0.1) 64px -90px, var(--white) 60px -67px 0 -1px, rgba(255, 255, 255, 0.1) 34px -127px, var(--white) -26px -103px 0 -1px;
+  }
+}
+.more-clouds {
+  animation: bounce var(--animation-time) ease-in-out infinite;
+  background: var(--white-cloud);
+  border-radius: 50%;
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px, var(--darker-cloud) 104px -38px 0 -5px, var(--darker-cloud) 73px -52px 0 1px, var(--darker-cloud) 100px -20px 0 -1px, var(--darker-cloud) 122px -21px 0 -8px, var(--darker-cloud) 126px -21px 0 -8px, var(--shadow-cloud) 118px -18px 5px -4px;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+
+.clouds {
+  animation: bounce var(--animation-time) ease-in-out infinite;
+  background: var(--white-cloud);
+  border-radius: 50%;
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateY(var(--animation-translate)) scale(calc(var(--icon-size) + var(--scale-amount) + var(--scale-factor)));
+  }
+}
+.drizzle {
+  animation: bounce var(--animation-time) ease-in-out infinite;
+  background: var(--white-cloud);
+  border-radius: 50%;
+  box-shadow: var(--white-cloud) 77px -20px 0 -5px, var(--white-cloud) 35px -34px 0 4px, var(--white-cloud) 3px 0 0 2px, var(--white-cloud) 5px 0 0 2px, var(--white-cloud) 10px 0 0 2px, var(--white-cloud) 15px 0 0 2px, var(--white-cloud) 20px 0 0 2px, var(--white-cloud) 25px 0 0 2px, var(--white-cloud) 30px 0 0 2px, var(--white-cloud) 35px 0 0 2px, var(--white-cloud) 40px 0 0 2px, var(--white-cloud) 45px 0 0 2px, var(--white-cloud) 50px 0 0 2px, var(--white-cloud) 55px 0 0 2px, var(--white-cloud) 60px 0 0 2px, var(--white-cloud) 70px 2px 0 0, var(--white-cloud) 65px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 74px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 79px 2px 0 0, var(--white-cloud) 81px 2px 0 0, var(--white-cloud) 81px 0 0 -3px, var(--white-cloud) 84px 5px 0 -3px, var(--white-cloud) 87px 5px 0 -3px, var(--white-cloud) 92px 5px 0 -3px, var(--white-cloud) 98px 5px 0 -3px, var(--shadow-cloud) 5px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 10px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 15px 5px 5px 2px, var(--shadow-cloud) 20px 5px 5px 2px, var(--shadow-cloud) 25px 5px 5px 2px, var(--shadow-cloud) 30px 5px 5px 2px, var(--shadow-cloud) 35px 5px 5px 2px, var(--shadow-cloud) 40px 5px 5px 2px, var(--shadow-cloud) 45px 5px 5px 2px, var(--shadow-cloud) 50px 5px 5px 2px, var(--shadow-cloud) 84px 5px 5px 2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 90px 9px 5px -2px, var(--shadow-cloud) 60px 5px 5px 2px, var(--shadow-cloud) 69px 5px 5px 2px, var(--shadow-cloud) 70px 2px 5px 0, var(--shadow-cloud) 79px 2px 5px 0, var(--shadow-cloud) 73px 8px 5px 0, var(--shadow-cloud) 86px 5px 5px -3px, var(--shadow-cloud) 89px 10px 5px -3px, var(--shadow-cloud) 105px 10px 5px -3px;
+  display: block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  transform: scale(calc(var(--icon-size) + var(--scale-factor)));
+}
+.drizzle:before {
+  animation: drizzle 1s infinite linear;
+  content: "";
+  background: transparent;
+  margin-left: 0;
+  border-radius: 50%;
+  display: block;
+  height: 6px;
+  width: 3px;
+  opacity: 0.3;
+  transform: scale(0.9);
+}
+
+@keyframes drizzle {
+  0% {
+    box-shadow: transparent 40px 40px, var(--rain-drop) 50px 75px, var(--rain-drop) 70px 100px, var(--rain-drop) 80px 95px, var(--rain-drop) 110px 45px;
+  }
+  25% {
+    box-shadow: var(--rain-drop) 40px 60px, var(--rain-drop) 50px 90px, transparent 70px 120px, transparent 80px 120px, var(--rain-drop) 110px 70px;
+  }
+  26% {
+    box-shadow: var(--rain-drop) 40px 60px, var(--rain-drop) 50px 90px, transparent 70px 40px, transparent 80px 20px, var(--rain-drop) 110px 70px;
+  }
+  50% {
+    box-shadow: var(--rain-drop) 40px 80px, transparent 50px 100px, var(--rain-drop) 70px 60px, var(--rain-drop) 80px 45px, var(--rain-drop) 110px 95px;
+  }
+  51% {
+    box-shadow: var(--rain-drop) 40px 80px, transparent 50px 45px, var(--rain-drop) 70px 60px, var(--rain-drop) 80px 45px, var(--rain-drop) 110px 95px;
+  }
+  75% {
+    box-shadow: var(--rain-drop) 40px 100px, var(--rain-drop) 50px 60px, var(--rain-drop) 70px 80px, var(--rain-drop) 80px 70px, transparent 110px 120px;
+  }
+  76% {
+    box-shadow: var(--rain-drop) 40px 100px, var(--rain-drop) 50px 60px, var(--rain-drop) 70px 80px, var(--rain-drop) 80px 70px, transparent 110px 25px;
+  }
+  100% {
+    box-shadow: transparent 40px 120px, var(--rain-drop) 50px 75px, var(--rain-drop) 70px 100px, var(--rain-drop) 80px 95px, var(--rain-drop) 110px 45px;
+  }
+}
+@media screen and (min-width: 760px) {
+  body {
+    height: 100vh;
+  }
   .container {
     max-width: 60rem;
     margin: auto;
@@ -285,11 +1000,118 @@ body {
   .current-information .today-temp {
     margin-top: 0;
   }
+  .current-information .today-temp .weather-temp {
+    font-size: 4rem;
+  }
+  .current-information .today-temp .weather-description {
+    font-size: 1.3rem;
+  }
   .search-bar .suggestion-container ul {
     color: var(--primary);
   }
+  .hour-container .card,
+  .week-container .card {
+    padding: 2em 3em;
+  }
+  .hour-container .card > *,
+  .week-container .card > * {
+    --scale-factor: 0.3;
+  }
+  .week-container .card .few-clouds-day {
+    --left: -7px;
+    --top: 17px;
+  }
+  .week-container .card .few-clouds-night {
+    --left: 41px;
+    --top: -49px;
+    --scale-factor: 0.1;
+  }
+  .week-container .card .clouds {
+    --left: -8px;
+    --top: 20px;
+  }
+  .week-container .card .more-clouds {
+    --left: -10px;
+    --top: 29px;
+  }
+  .week-container .card .clear-day {
+    --left: 3px;
+    --top: -4px;
+  }
+  .week-container .card .clear-night {
+    --left: 47px;
+    --top: 74px;
+  }
+  .week-container .card .snow {
+    --left: -8px;
+    --top: 20px;
+  }
+  .week-container .card .rain {
+    --left: -10px;
+    --top: 29px;
+  }
+  .week-container .card .light-rain-day {
+    --left: -8px;
+    --top: 20px;
+  }
+  .week-container .card .light-rain-night {
+    --left: -8px;
+    --top: 20px;
+  }
+  .week-container .card .drizzle {
+    --left: -8px;
+    --top: 20px;
+  }
+  .week-container .card .storm {
+    --left: -10px;
+    --top: 18px;
+  }
+  .hour-container .card .few-clouds-day {
+    --left: -10px;
+    --top: 8px;
+  }
+  .hour-container .card .few-clouds-night {
+    --left: 38px;
+    --top: -64px;
+    --scale-factor: 0.1;
+  }
+  .hour-container .card .clouds {
+    --left: -9px;
+  }
+  .hour-container .card .more-clouds {
+    --left: -15px;
+    --top: 16px;
+  }
+  .hour-container .card .clear-day {
+    --left: 4px;
+  }
+  .hour-container .card .clear-night {
+    --left: 41px;
+    --top: 65px;
+  }
+  .hour-container .card .snow {
+    --left: -9px;
+    --top: 0px;
+  }
+  .hour-container .card .rain {
+    --left: -15px;
+    --top: 16px;
+  }
+  .hour-container .card .light-rain-day {
+    --left: -9px;
+  }
+  .hour-container .card .light-rain-night {
+    --left: -9px;
+  }
+  .hour-container .card .drizzle {
+    --left: -9px;
+    --top: 4px;
+  }
+  .hour-container .card .storm {
+    --left: -15px;
+    --top: 6px;
+  }
   .hour-container .hour-card {
-    justify-content: space-between;
     padding-block: 1.5rem;
   }
   .hour-container .hour-card .hour-feels,
@@ -301,6 +1123,9 @@ body {
   }
   .hour-container .hour-card .h-text {
     font-size: 1rem;
+  }
+  .hour-container .hour-card .hour-desc {
+    display: block;
   }
   .week-container {
     flex-direction: row;
@@ -325,8 +1150,11 @@ body {
   .week-container .day-card .day-temp {
     font-size: 2.5rem;
   }
+  .week-container .day-card-more-info {
+    display: block;
+  }
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 845px) {
   .location h3 {
     font-size: 1.5rem;
   }
@@ -336,19 +1164,33 @@ body {
   .today-container {
     display: grid;
     grid-template-columns: 1fr 0.1fr 2fr;
-    grid-template-rows: 1fr 3fr;
+    grid-template-rows: 1fr 0.5fr 3fr;
+  }
+  .today-container > :nth-child(1) {
+    grid-row: 1/3;
   }
   .today-container > :nth-child(2) {
     grid-column: 3/4;
   }
+  .today-container > :nth-child(3) {
+    grid-row: 3/4;
+  }
   .today-container > :nth-child(4) {
     grid-column: 3/4;
+    grid-row: 2/4;
+  }
+  .hour-container .card,
+  .week-container .card {
+    padding: 2.5em 3em;
+  }
+  .hour-container .card > *,
+  .week-container .card > * {
+    --scale-factor: 0.3;
   }
   .hour-container {
     gap: 1rem;
   }
   .hour-container .hour-card {
-    padding: 1rem;
     flex: 1;
   }
 }/*# sourceMappingURL=styles.css.map */
