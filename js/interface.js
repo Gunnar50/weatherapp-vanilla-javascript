@@ -27,13 +27,13 @@ export const setInterface = ({ city, list }, currentDayData) => {
 		daySection.dt_txt.endsWith("12:00:00")
 	);
 
-	console.log(nextDays);
+	// console.log(nextDays);
 	// console.log(city);
 
 	const [cardDayNight, cardWeather] = getIconsClass(
 		currentWeather.weather[0]
 	)[0].split(" ");
-	console.log(cardDayNight, cardWeather);
+	// console.log(cardDayNight, cardWeather);
 
 	todayContainerRef.classList.add(
 		isDayTime ? "card-day" : "card-night",
