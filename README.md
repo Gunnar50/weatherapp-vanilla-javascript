@@ -10,6 +10,7 @@
 - [x] overhaul on colours
 - [x] add API for current day only for better forecast
 - [x] add loading skeleton
+- [ ] validate input
 - [ ] add API for spell check
 - [ ] add local storage and cache
 - [ ] missing atmosphere icons
