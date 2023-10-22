@@ -1,0 +1,65 @@
+@use "../abstracts" as *;
+
+@media screen and (min-width: $medium) {
+	.today-container {
+		.skeleton-input {
+			display: block;
+			height: 30px;
+		}
+
+		.skeleton-current {
+			margin-top: 0;
+			.temp {
+				width: 90px;
+				height: 70px;
+			}
+		}
+
+		.skeleton-hour {
+			margin-top: 0;
+			.skeleton-text {
+				width: 130px;
+				height: 250px;
+			}
+		}
+	}
+
+	.week-container {
+		.skeleton-container {
+			flex-direction: row;
+			.week {
+				width: 220px;
+				height: 340px;
+				flex-direction: column;
+				justify-content: space-between;
+				.skeleton-title {
+					margin-right: 0;
+					text-align: center;
+					:first-child {
+						width: 150px;
+						height: 30px;
+					}
+					:last-child {
+						width: 80%;
+						margin-inline: auto;
+					}
+				}
+				.skeleton-icon {
+					margin-inline: auto;
+					width: 80px;
+					height: 80px;
+				}
+				.skeleton-text {
+					width: 70px;
+					height: 50px;
+				}
+				& > :nth-last-child(-n + 2) {
+					width: 120px;
+					height: 1rem;
+					display: block;
+					margin-bottom: 10px;
+				}
+			}
+		}
+	}
+}
