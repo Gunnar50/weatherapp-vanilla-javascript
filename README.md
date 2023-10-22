@@ -7,35 +7,40 @@
 - [x] have the input to display multiple option so the user can choose a location.
 - [x] add animation and better graphics/icons
 - [x] design desktop mode too
-- [x] do overhaul on colours
+- [x] overhaul on colours
 - [x] add API for current day only for better forecast
+- [x] add loading skeleton
 - [ ] add API for spell check
 - [ ] add local storage and cache
-- [ ] show error messages
 - [ ] missing atmosphere icons
 
-_02d few clouds with sun day:_ card-day card-clouds > few-clouds-day
-_02n few clouds with moon night:_ card-night card-clouds > few-clouds-night
+**show error messages**
 
-_03d scattered clouds day:_ card-day card-clouds > clouds
-_03n scattered clouds night:_ card-night card-clouds > clouds
+- [ ] location file
+- [ ] weather controller file
 
-_04d broken/overcast clouds day:_ card-day card-more-clouds > more-clouds
-_04n broken/overcast clouds night:_ card-night card-more-clouds > more-clouds
+**02d few clouds with sun day:** card-day card-clouds > few-clouds-day<br/>
+**02n few clouds with moon night:** card-night card-clouds > few-clouds-night<br/>
 
-_01d clear day:_ card-day card-clear > clear-day
-_01n clear night:_ card-night card-clear > clear-night
+**03d scattered clouds day:** card-day card-clouds > clouds<br/>
+**03n scattered clouds night:** card-night card-clouds > clouds<br/>
 
-_13d snow day:_ card-day card-snow > snow
-_13n snow night:_ card-night card-snow > snow
+**04d broken/overcast clouds day:** card-day card-more-clouds > more-clouds<br/>
+**04n broken/overcast clouds night:** card-night card-more-clouds > more-clouds<br/>
 
-_09d rain day:_ card-day card-rain > rain
-_09n rain night:_ card-night card-rain > rain
-_10d rain day:_ card-day card-light-rain > light-rain-day
-_10n rain night:_ card-night card-light-rain > light-rain-night
+**01d clear day:** card-day card-clear > clear-day<br/>
+**01n clear night:** card-night card-clear > clear-night<br/>
 
-_09d drizzle day:_ card-day card-drizzle > drizzle
-_09n drizzle night:_ card-night card-drizzle > drizzle
+**13d snow day:** card-day card-snow > snow<br/>
+**13n snow night:** card-night card-snow > snow<br/>
 
-_11d storm day:_ card-day card-storm > storm
-_11n storm night:_ card-night card-storm > storm
+**09d rain day:** card-day card-rain > rain<br/>
+**09n rain night:** card-night card-rain > rain<br/>
+**10d rain day:** card-day card-light-rain > light-rain-day<br/>
+**10n rain night:** card-night card-light-rain > light-rain-night<br/>
+
+**09d drizzle day:** card-day card-drizzle > drizzle<br/>
+**09n drizzle night:** card-night card-drizzle > drizzle<br/>
+
+**11d storm day:** card-day card-storm > storm<br/>
+**11n storm night:** card-night card-storm > storm<br/>
