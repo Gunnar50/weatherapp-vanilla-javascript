@@ -1,6 +1,6 @@
-import { findUser } from "./findUserController.js";
-import { getUserLocation } from "./inputController.js";
-import { getAutoGeoLocation } from "./weatherController.js";
+import { findUser } from "./controllers/findUserController.js";
+import { getUserLocation } from "./controllers/inputController.js";
+import { getAutoGeoLocation } from "./controllers/weatherController.js";
 
 getAutoGeoLocation();
 findUser();

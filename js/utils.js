@@ -1,4 +1,5 @@
 import {
+	errorMessages,
 	mediumScreen,
 	rootContainerRef,
 	searchBarRef,
@@ -172,4 +173,13 @@ export const getIconsClass = (dataWeather) => {
 	// return ["card-day card-" + card, card];
 
 	return [upperclass, lowerclass];
+};
+
+export const createErrorMessage = (message, timeout) => {
+	errorMessages.innerHTML = message;
+	errorMessages.classList.add("show");
+
+	setTimeout(() => {
+		errorMessages.classList.remove("show");
+	}, timeout);
 };
