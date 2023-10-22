@@ -16,8 +16,9 @@
 
 **show error messages**
 
-- [ ] location file
-- [ ] weather controller file
+- [x] location controller file
+- [x] find user controller file
+- [x] weather controller file
 
 **02d few clouds with sun day:** card-day card-clouds > few-clouds-day<br/>
 **02n few clouds with moon night:** card-night card-clouds > few-clouds-night<br/>
