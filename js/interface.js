@@ -11,7 +11,6 @@ import {
 import { todayContainerRef, weekContainerRef } from "./config.js";
 
 export const setInterface = ({ city, list }, currentDayData) => {
-	console.log(currentDayData);
 	const { name: cityName, country, sunrise, sunset } = city;
 	const isDayTime = checkDayTime(sunset, sunrise);
 
