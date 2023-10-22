@@ -1,4 +1,4 @@
-import { API_KEY, API_URL, cityInput } from "./config.js";
+import { API_KEY, API_URL, cityInput } from "../config.js";
 import { getWeather } from "./weatherController.js";
 
 // const locationURL = "https://api.openweathermap.org/geo/1.0/direct?";

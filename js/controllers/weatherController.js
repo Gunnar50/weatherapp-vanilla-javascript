@@ -1,6 +1,7 @@
-import { API_KEY, API_URL, autoLat, autoLong } from "./config.js";
-import { setInterface } from "./interface.js";
-import { getUserLocation } from "./location.js";
+import { API_KEY, API_URL, autoLat, autoLong } from "../config.js";
+import { setInterface } from "../interface.js";
+import { createErrorMessage } from "../utils.js";
+import { getUserLocation } from "./getLocationController.js";
 
 export const getWeather = async (latitude, longitude) => {
 	try {
@@ -13,7 +14,9 @@ export const getWeather = async (latitude, longitude) => {
 		);
 		setInterface(weekForeast.data, currentDay.data);
 	} catch (error) {
-		console.log("Ops! Something went wrong: " + error.message);
+		console.log("API error: " + error.message);
+		// API is down, send message to user
+		createErrorMessage("API error, please come back later.", 5000);
 	}
 };
 
