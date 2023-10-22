@@ -37,6 +37,21 @@
 	max-width: 320px;
 }
 
+.error-messages-container {
+	position: fixed;
+	padding: 1rem;
+	color: var(--white);
+	background-color: rgb(167, 0, 0);
+	width: 100%;
+	z-index: 5;
+	text-align: center;
+	top: -100%;
+	transition: top 500ms ease;
+	&.show {
+		top: 0;
+	}
+}
+
 .title {
 	text-align: center;
 }
