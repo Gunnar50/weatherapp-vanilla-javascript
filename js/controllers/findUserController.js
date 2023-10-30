@@ -13,7 +13,6 @@ export const findUser = () => {
 			getWeather(latitude, longitude);
 			cityInput.value = "";
 		} catch (e) {
-			console.log("here");
 			createErrorMessage(
 				"To use the find me button, please allow your location.",
 				5000
