@@ -49,6 +49,10 @@ body {
   --scale-factor: 0;
 }
 
+body {
+  height: 100vh;
+}
+
 [data-theme=day][data-weather=clear],
 [data-theme=night][data-weather=clear] {
   background: linear-gradient(180deg, #a5cdf1, #e2f2fc);
@@ -1101,9 +1105,6 @@ body {
   }
 }
 @media screen and (min-width: 760px) {
-  body {
-    height: 100vh;
-  }
   .container {
     max-width: 60rem;
     margin: auto;

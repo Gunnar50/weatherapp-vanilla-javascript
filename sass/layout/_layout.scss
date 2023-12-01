@@ -1,5 +1,9 @@
 @use "../abstracts" as *;
 
+body {
+	height: 100vh;
+}
+
 [data-theme="day"],
 [data-theme="night"] {
 	&[data-weather="clear"] {
