@@ -1,7 +1,5 @@
 # WeatherApp
 
-## Technologies: HTML, SASS, VanillaJS, Open weather API
-
 ## 🌐 Project
 
 WeatherApp is a dynamic web application designed to provide real-time weather information using HTML, SASS, and JavaScript. This project is part of the Jump Digital School course, aimed at showcasing front-end development skills, particularly in creating custom animations and handling API data.
