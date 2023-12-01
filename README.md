@@ -2,47 +2,72 @@
 
 ## Technologies: HTML, SASS, VanillaJS, Open weather API
 
-### TODO:
+## 🌐 Project
 
-- [x] have the input to display multiple option so the user can choose a location.
-- [x] add animation and better graphics/icons
-- [x] design desktop mode too
-- [x] overhaul on colours
-- [x] add API for current day only for better forecast
-- [x] add loading skeleton
-- [ ] validate input
-- [ ] add API for spell check
-- [ ] add local storage and cache
-- [ ] missing atmosphere icons
+WeatherApp is a dynamic web application designed to provide real-time weather information using HTML, SASS, and JavaScript. This project is part of the Jump Digital School course, aimed at showcasing front-end development skills, particularly in creating custom animations and handling API data.
 
-**show error messages**
+### 🏠 [Demo Link](https://weather-vanillajs-gustavopassarella.netlify.app/)
 
-- [x] location controller file
-- [x] find user controller file
-- [x] weather controller file
+![main page](images/main.png)
 
-**02d few clouds with sun day:** card-day card-clouds > few-clouds-day<br/>
-**02n few clouds with moon night:** card-night card-clouds > few-clouds-night<br/>
+## ✨ Features
 
-**03d scattered clouds day:** card-day card-clouds > clouds<br/>
-**03n scattered clouds night:** card-night card-clouds > clouds<br/>
+- **Current Weather Display:** Shows weather conditions for the current time.
+- **Forecast Information:** Provides a forecast for 4 time stamps, 3 hours apart, on the current day and the next 4 days.
+- **Search Functionality:** Users can search for weather information by city or location.
+- **Geolocation Support**: If permitted, the application can automatically fetch weather data based on the user's current location.
+- **Custom Weather Animations:** Unique animations corresponding to different weather conditions for enhanced user experience.
+- **Mobile-First Design:** Optimized for mobile users, ensuring a responsive and intuitive interface on smaller screens.
 
-**04d broken/overcast clouds day:** card-day card-more-clouds > more-clouds<br/>
-**04n broken/overcast clouds night:** card-night card-more-clouds > more-clouds<br/>
+## 🔧 Installation and Setup
 
-**01d clear day:** card-day card-clear > clear-day<br/>
-**01n clear night:** card-night card-clear > clear-night<br/>
+Clone the repository
 
-**13d snow day:** card-day card-snow > snow<br/>
-**13n snow night:** card-night card-snow > snow<br/>
+```
+git clone https://github.com/Gunnar50/weatherapp-vanilla-javascript.git
+```
 
-**09d rain day:** card-day card-rain > rain<br/>
-**09n rain night:** card-night card-rain > rain<br/>
-**10d rain day:** card-day card-light-rain > light-rain-day<br/>
-**10n rain night:** card-night card-light-rain > light-rain-night<br/>
+Navigate to the project directory
 
-**09d drizzle day:** card-day card-drizzle > drizzle<br/>
-**09n drizzle night:** card-night card-drizzle > drizzle<br/>
+```
+cd weatherapp-vanilla-javascript
+```
 
-**11d storm day:** card-day card-storm > storm<br/>
-**11n storm night:** card-night card-storm > storm<br/>
+Open `index.html` as a Live Server
+
+## 🧠 Reflection
+
+This project was developed as a side project for the Jump Digital School Bootcamp to better understand frontend development, particularly in working with external APIs like the OpenWeather.
+
+The goal was to build a user-friendly application where users can easily check the current weather and forecast for the next few days.
+
+The project posed a series of challenges including:
+
+- Deep understanding of JavaScript
+- Performing API calls
+- Implementing custom animations based on weather conditions
+- Implementing mobile first approach
+
+These challenges were significant in deepening my understanding of HTML, CSS and JavaScript and how different parts of an application interact with each other.
+
+### 🛠️ Technology Stack
+
+- Visual Studio Code
+- HTML
+- SASS
+- JavaScript
+- OpenWeather API
+
+## 🤝 Contributing
+
+Contribuition, issues and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/Gunnar50/react-simpsons-quotes/issues)
+
+## ⭐️ Show your support
+
+Give a start if you liked and this project helped you!
+
+## 📝 License
+
+This project is open source and available under the MIT License.
